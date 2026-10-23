@@ -3,32 +3,32 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.Film;
+import entities.Title;
 
 public class Catalog {
 
-	private List<Film> filmList = new ArrayList<>();
+	private List<Title> titleList = new ArrayList<>();
 
-	public void add(Film film) {
-		if (film == null) {
-			throw new IllegalArgumentException("Type a valid film name.");
+	public void add(Title title) {
+		if (title == null) {
+			throw new IllegalArgumentException("Type a valid title name.");
 		}
-		filmList.add(film);
+		titleList.add(title);
 	}
 
-	public void remove(Film film) {
-		filmList.remove(film);
+	public void remove(Title title) {
+		titleList.remove(title);
 	}
 
-	public List<Film> getFilms() {
-		return filmList;
+	public List<Title> getTitles() {
+		return List.copyOf(titleList);
 	}
 
-	public List<Film> searchByName(String name) {
-		List<Film> results = new ArrayList<>();
-		for (Film film : filmList) {
-			if (film.getName().toLowerCase().contains(name.toLowerCase())) {
-				results.add(film);
+	public List<Title> searchTitle(String name) {
+		List<Title> results = new ArrayList<>();
+		for (Title title : titleList) {
+			if (title.getName().toLowerCase().contains(name.toLowerCase())) {
+				results.add(title);
 			}
 		}
 		return results;
