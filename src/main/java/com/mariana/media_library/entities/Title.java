@@ -1,4 +1,6 @@
-package entities;
+package com.mariana.media_library.entities;
+
+import java.util.Objects;
 
 public abstract class Title {
 
@@ -77,5 +79,31 @@ public abstract class Title {
 
 	public void setAsWatched() {
 		this.watched = true;
+	}
+
+	// hashcode & equals
+	@Override
+	public int hashCode() {
+		return Objects.hash(name.toLowerCase(), releaseYear);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Title other = (Title) obj;
+		return Objects.equals(name.toLowerCase(), other.name.toLowerCase()) && releaseYear == other.releaseYear;
+	}
+
+	// toString
+	@Override
+	public String toString() {
+		String watchedStatus = (watched) ? "Watched" : "Not Watched";
+		return String.format("%s (%d) — %s | Rating: %.1f/10 | Status: %s", name, releaseYear, genre, rating,
+				watchedStatus);
 	}
 }

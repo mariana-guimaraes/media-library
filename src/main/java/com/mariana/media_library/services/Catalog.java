@@ -1,9 +1,9 @@
-package services;
+package com.mariana.media_library.services;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.Title;
+import com.mariana.media_library.entities.Title;
 
 public class Catalog {
 

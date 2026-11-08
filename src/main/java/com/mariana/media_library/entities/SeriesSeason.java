@@ -1,4 +1,4 @@
-package entities;
+package com.mariana.media_library.entities;
 
 import java.util.ArrayList;
 import java.util.List;
