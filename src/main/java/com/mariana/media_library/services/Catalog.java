@@ -3,7 +3,7 @@ package com.mariana.media_library.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mariana.media_library.entities.Title;
+import com.mariana.media_library.model.Title;
 
 public class Catalog {
 
@@ -27,7 +27,7 @@ public class Catalog {
 	public List<Title> searchTitle(String name) {
 		List<Title> results = new ArrayList<>();
 		for (Title title : titleList) {
-			if (title.getName().toLowerCase().contains(name.toLowerCase())) {
+			if (title.getTitle().toLowerCase().contains(name.toLowerCase())) {
 				results.add(title);
 			}
 		}

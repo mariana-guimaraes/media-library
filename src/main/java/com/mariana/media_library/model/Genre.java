@@ -1,4 +1,4 @@
-package com.mariana.media_library.entities;
+package com.mariana.media_library.model;
 
 public enum Genre {
 
