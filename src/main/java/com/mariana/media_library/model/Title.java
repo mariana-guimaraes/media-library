@@ -17,15 +17,20 @@ public abstract class Title {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "genre")
 	private Genre genre;
+	
 	@Column(name = "title", nullable = false, length = 120)
 	private String title;
+	
 	@Column(name = "director", nullable = false)
 	private String director;
+	
 	@Column(name = "release_year", nullable = false)
 	private int releaseYear;
+	
 	@Column(name = "rating", nullable = false)
 	private double rating;
 
@@ -60,6 +65,14 @@ public abstract class Title {
 		this.title = title;
 	}
 
+	public String getDirector() {
+		return title;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
 	public int getReleaseYear() {
 		return releaseYear;
 	}
@@ -74,14 +87,6 @@ public abstract class Title {
 
 	public double getRating() {
 		return rating;
-	}
-
-	// methods
-	public void evaluate(double rating) {
-		if (rating < 0.0 || rating > 10.0) {
-			throw new IllegalArgumentException("The chosen rating must be between 0 and 10.");
-		}
-		this.rating = rating;
 	}
 
 	// hashcode & equals
