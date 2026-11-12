@@ -3,6 +3,7 @@ package com.mariana.media_library.model;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -10,27 +11,30 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
 
+@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Title {
+@Table(name = "titles")
+public class Title {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "genre")
 	private Genre genre;
-	
+
 	@Column(name = "title", nullable = false, length = 120)
 	private String title;
-	
+
 	@Column(name = "director", nullable = false)
 	private String director;
-	
+
 	@Column(name = "release_year", nullable = false)
 	private int releaseYear;
-	
+
 	@Column(name = "rating", nullable = false)
 	private double rating;
 
@@ -38,15 +42,16 @@ public abstract class Title {
 	public Title() {
 	}
 
-	public Title(String title, String director, int releaseYear, Genre genre) {
+	public Title(Long id, String title, String director, int releaseYear, Genre genre) {
 		if (title == null || title.isBlank()) {
 			throw new IllegalArgumentException("title is empty.");
 		}
 		if (releaseYear < 1888) { // year when the first film was made
 			throw new IllegalArgumentException("Year not valid.");
 		}
-		this.director = director;
+		this.id = id;
 		this.title = title;
+		this.director = director;
 		this.releaseYear = releaseYear;
 		this.genre = genre;
 	}
@@ -87,6 +92,10 @@ public abstract class Title {
 
 	public double getRating() {
 		return rating;
+	}
+	
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 	// hashcode & equals

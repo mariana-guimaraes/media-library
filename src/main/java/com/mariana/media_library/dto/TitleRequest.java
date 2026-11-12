@@ -1,4 +1,6 @@
 package com.mariana.media_library.dto;
+import com.mariana.media_library.model.Genre;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +17,9 @@ public record TitleRequest(
 
 		@NotNull(message = "Year can not be blank.")
 		@Min(value = 1888, message = "Year must be over 1888")
-		Integer releaseYear) {
-
+		Integer releaseYear,
+		
+		@NotNull(message = "Year can not be blank.")
+		Genre genre) {
+	
 }
