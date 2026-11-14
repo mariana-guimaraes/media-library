@@ -89,6 +89,10 @@ public class Title {
 	public Genre getGenre() {
 		return genre;
 	}
+	
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
 
 	public double getRating() {
 		return rating;

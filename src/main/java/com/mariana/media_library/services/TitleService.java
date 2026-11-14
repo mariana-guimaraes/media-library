@@ -34,9 +34,9 @@ public class TitleService {
 	
 	// findById
 	@Transactional(readOnly = true)
-	 public Optional<TitleResponse> findById(Long id) {
-        return repository.findById(id).map(TitleResponse::fromDomain);
-    }
+	public Optional<TitleResponse> findById(Long id) {
+		return repository.findById(id).map(TitleResponse::fromDomain);
+	}
 
 	// create
 	@Transactional
@@ -55,6 +55,19 @@ public class TitleService {
 	        }
 	        return false;
 	    }
+	 
+	 //update
+	 @Transactional
+	 public Optional<TitleResponse> update(Long id, TitleRequest request) {
+		 return repository.findById(id).map(title -> {
+			 title.setTitle(request.title());
+			 title.setDirector(request.director());
+			 title.setReleaseYear(request.releaseYear());
+			 title.setGenre(request.genre());
+	         Title updated = repository.save(title);
+	         return TitleResponse.fromDomain(updated);
+	     });
+	 }
 	 
 	// updateRating
 	@Transactional
