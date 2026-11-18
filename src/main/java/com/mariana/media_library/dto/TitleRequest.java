@@ -19,7 +19,7 @@ public record TitleRequest(
 		@Min(value = 1888, message = "Year must be over 1888")
 		Integer releaseYear,
 		
-		@NotNull(message = "Year can not be blank.")
+		@NotNull(message = "Genre can not be blank.")
 		Genre genre) {
 	
 }

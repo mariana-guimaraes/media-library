@@ -21,7 +21,7 @@ public class TmdbClient {
 		this.client = builder.baseUrl(baseUrl).defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token).build();
 	}
 
-	public TmdbSearchResponse searchTitle(String query) {
+	public TmdbSearchResponse searchMovie(String query) {
         return client.get()
                      .uri(uriBuilder -> uriBuilder
                             .path("/search/movie")
@@ -32,9 +32,9 @@ public class TmdbClient {
                      .body(TmdbSearchResponse.class);
     }
 	
-	public TmdbTitle getTitleDetails(Long tmdbId) {
+	public TmdbTitle getMovieDetails(Long tmdbId) {
         return client.get()
-                .uri("/title/{id}", tmdbId)
+                .uri("/movie/{id}", tmdbId)
                 .retrieve()
                 .body(TmdbTitle.class);
     }

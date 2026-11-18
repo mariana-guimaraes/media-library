@@ -58,7 +58,7 @@ public class Title {
 
 	// gets & sets
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -71,7 +71,7 @@ public class Title {
 	}
 
 	public String getDirector() {
-		return title;
+		return director;
 	}
 
 	public void setDirector(String director) {

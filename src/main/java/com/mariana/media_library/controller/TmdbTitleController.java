@@ -16,7 +16,7 @@ import com.mariana.media_library.dto.TitleResponse;
 import com.mariana.media_library.services.TmdbService;
 
 @RestController
-@RequestMapping("/api/tmdb/titles")
+@RequestMapping("/api/tmdb/movies")
 public class TmdbTitleController {
 
 	 private final TmdbService tmdbService;
@@ -35,7 +35,7 @@ public class TmdbTitleController {
 	    @PostMapping("/{tmdbId}/import")
 	    public ResponseEntity<TitleResponse> importTitle(
 	    		@PathVariable 
-	    		long tmdbId) {
+	    		Long tmdbId) {
 	        TitleResponse imported = tmdbService.importTitle(tmdbId);
 	        return ResponseEntity.status(HttpStatus.CREATED).body(imported);
 	    }
