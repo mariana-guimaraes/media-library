@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.mariana.media_library.dto.RatingUpdateRequest;
 import com.mariana.media_library.dto.TitleRequest;
 import com.mariana.media_library.dto.TitleResponse;
+import com.mariana.media_library.exception.TitleNotFoundException;
 import com.mariana.media_library.model.Title;
 import com.mariana.media_library.repositories.TitleRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,8 +35,9 @@ public class TitleService {
 	
 	// findById
 	@Transactional(readOnly = true)
-	public Optional<TitleResponse> findById(Long id) {
-		return repository.findById(id).map(TitleResponse::fromDomain);
+	public TitleResponse findById(Long id) {
+		return repository.findById(id).map(TitleResponse::fromDomain)
+				.orElseThrow(() -> new TitleNotFoundException(id));
 	}
 
 	// create

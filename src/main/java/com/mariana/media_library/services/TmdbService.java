@@ -26,38 +26,34 @@ public class TmdbService {
 		this.titleRepository = titleRepository;
 	}
 
-	
 	public List<TitleCandidateResponse> searchCandidates(String query) {
-		TmdbSearchResponse response = tmdbClient.searchTitle(query);
-		if (response == null || response.results() == null) {
-			return List.of();
+		TmdbSearchResponse response = tmdbClient.searchMovie(query);
+		if (response == null) {
+			throw new IllegalStateException("Invalid response.");
+		}
+		if (response.results() == null) {
+			throw new IllegalStateException("There are no results.");
 		}
 		return response.results().stream()
 				.map(tmdb -> new TitleCandidateResponse(tmdb.id(), tmdb.title(), tmdb.releaseDate())).toList();
 	}
 
-	
-	 @Transactional
-	    public TitleResponse importTitle(long tmdbId) {
-	        TmdbTitle external = tmdbClient.getTitleDetails(tmdbId);
-	        int year = 2026;
-	        if (external.releaseDate() != null && !external.releaseDate().isBlank()) {
-	            year = LocalDate.parse(external.releaseDate()).getYear();
-	        }
-	        Title title = new Title();
-	        title.setTitle(external.title());
-	        title.setDirector("Unknown (TMDB)");
-	        title.setReleaseYear(year);
-	        title.setRating(external.voteAverage() != null ? external.voteAverage() : 0.0);
+	@Transactional
+	public TitleResponse importTitle(long tmdbId) {
+		TmdbTitle external = tmdbClient.getMovieDetails(tmdbId);
+		int year = 2026;
+		if (external.releaseDate() != null && !external.releaseDate().isBlank()) {
+			year = LocalDate.parse(external.releaseDate()).getYear();
+		}
+		Title title = new Title();
+		title.setTitle(external.title());
+		title.setDirector("Unknown (TMDB)");
+		title.setReleaseYear(year);
+		title.setRating(external.voteAverage() != null ? external.voteAverage() : 0.0);
 
-	        Title saved = titleRepository.save(title);
+		Title saved = titleRepository.save(title);
 
-	        return new TitleResponse(
-	                saved.getId(),
-	                saved.getTitle(),
-	                saved.getDirector(),
-	                saved.getReleaseYear(),
-	                saved.getRating()
-	        );
-	    }
+		return new TitleResponse(saved.getId(), saved.getTitle(), saved.getDirector(), saved.getReleaseYear(),
+				saved.getRating());
+	}
 }
