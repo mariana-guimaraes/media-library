@@ -7,6 +7,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -22,13 +24,13 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/titles")
 public class TitleController {
 
-    private final TitleService titleService;
+	private final TitleService titleService;
 
     private static final Logger log = LoggerFactory.getLogger(TitleController.class);
 
     public TitleController(TitleService titleService) {
     	this.titleService = titleService;
-    }
+    	}
 
     @GetMapping
     public ResponseEntity<List<TitleResponse>> list() {
@@ -42,14 +44,15 @@ public class TitleController {
     		String title) {
     	List<TitleResponse> response = titleService.findAll(title);
     	return ResponseEntity.ok(response);
-    }
+    	}
+    
     @GetMapping("/{id}")
     public ResponseEntity<TitleResponse> getById(
     		@PathVariable 
     		Long id) {
     	TitleResponse response = titleService.findById(id);
     	return ResponseEntity.ok(response);
-    }
+    	}
 
     @PostMapping
     public ResponseEntity<TitleResponse> create(
@@ -74,18 +77,24 @@ public class TitleController {
     	return ResponseEntity.ok(updated);
     	}
 
-    @PatchMapping("/{id}/rating")
-    public ResponseEntity<TitleResponse> updateRating(
-    		@PathVariable 
-    		Long id,
-    		@Valid @RequestBody 
-    		RatingUpdateRequest request) {
-    	TitleResponse updated = titleService.updateRating(id, request)
-    			.orElseThrow(() -> new TitleNotFoundException(id));
-    	return ResponseEntity.ok(updated);
-    	}
+	@PatchMapping("/{id}/rating")
+	public ResponseEntity<TitleResponse> updateRating(
+			@PathVariable
+			Long id,
+			@Valid @RequestBody
+			RatingUpdateRequest request,
+			@AuthenticationPrincipal
+			Jwt jwt) {
 
-    @DeleteMapping("/{id}")
+		String userId = jwt.getSubject();
+		log.info("User {} updating rating for title {}", userId, id);
+
+		TitleResponse updated = titleService.updateRating(id, request)
+				.orElseThrow(() -> new TitleNotFoundException(id));
+		return ResponseEntity.ok(updated);
+	}
+
+	@DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
     		@PathVariable 
     		Long id) {
