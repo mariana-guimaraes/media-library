@@ -22,12 +22,18 @@ public class SecurityConfig {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
 				.authorizeHttpRequests(auth -> auth
-						// get
+						// watchlist
+						.requestMatchers("/api/titles/watchlist", "/api/titles/watchlist/**").authenticated()
+						
+						// titles
 						.requestMatchers(HttpMethod.GET, "/api/titles/**").permitAll()
-						// H2
+
+						// H2 n actuator
 						.requestMatchers("/h2-console/**", "/actuator/**").permitAll()
+
 						// admin
 						.requestMatchers("/api/admin/**").hasAuthority("SCOPE_movies.admin")
+
 						// others
 						.anyRequest().authenticated())
 
