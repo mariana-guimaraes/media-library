@@ -5,3 +5,5 @@ bin/
 .classpath
 target/
 *.class
+# H2
+/data/

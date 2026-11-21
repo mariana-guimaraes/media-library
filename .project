@@ -25,11 +25,4 @@
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/main/resources/keys/classroom-public.pem</name>
-			<type>1</type>
-			<location>D:/sts- projetos eclipse/classroom-public.pem</location>
-		</link>
-	</linkedResources>
 </projectDescription>
